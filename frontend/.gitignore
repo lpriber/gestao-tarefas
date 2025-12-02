@@ -34,3 +34,28 @@ coverage
 
 # Vitest
 __screenshots__/
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ambiente
+.env
+*.env
+
+# Ignorar .env dentro de cada pasta
+backend/.env
+frontend/.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Credenciais Firebase/Google
+backend/serviceAccountKey.json
