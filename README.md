@@ -71,10 +71,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-5. Instale:
-npm install --save-dev nodemon
-
-6. Execute:
+5. Execute:
 
 npm run dev
 
