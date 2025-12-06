@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useSessionStore } from '../stores/session'
 
 const session = useSessionStore()
@@ -68,47 +68,69 @@ function headers() {
 }
 
 async function api(path: string, options: RequestInit = {}) {
-  const res = await fetch(import.meta.env.VITE_API_URL + path, { ...options, headers: headers() })
-  if (!res.ok) throw new Error((await res.json()).error || 'Erro na API')
+  const baseUrl = import.meta.env.VITE_API_URL
+  const res = await fetch(baseUrl + path, { ...options, headers: headers() })
+  
+  if (!res.ok) {
+    // Tenta parsear como JSON, se falhar, usa o texto da resposta
+    let errorMessage = 'Erro na API'
+    try {
+      const contentType = res.headers.get('content-type')
+      if (contentType && contentType.includes('application/json')) {
+        const errorData = await res.json()
+        errorMessage = errorData.error || `Erro ${res.status}: ${res.statusText}`
+      } else {
+        errorMessage = `Erro ${res.status}: ${res.statusText}`
+      }
+    } catch {
+      errorMessage = `Erro ${res.status}: ${res.statusText}`
+    }
+    throw new Error(errorMessage)
+  }
+  
   return res.json()
 }
 
 async function loadTasks() {
   try {
-    tasks.value = await api('/tasks')
+    tasks.value = await api('/api/tarefas')
   } catch (e: any) {
     error.value = e.message
+    console.error('Erro ao carregar tarefas:', e)
   }
 }
 
 async function createTask() {
   error.value = ''
   try {
-    await api('/tasks', { method: 'POST', body: JSON.stringify(form.value) })
+    await api('/api/tarefas', { method: 'POST', body: JSON.stringify(form.value) })
     form.value = { title: '', description: '' }
     await loadTasks()
   } catch (e: any) {
     error.value = e.message
+    console.error('Erro ao criar tarefa:', e)
   }
 }
 
 async function toggleDone(t: any) {
   error.value = ''
   try {
-    await api(`/tasks/${t.id}`, { method: 'PUT', body: JSON.stringify({ ...t, done: !t.done }) })
+    await api(`/api/tarefas/${t.id}`, { method: 'PUT', body: JSON.stringify({ ...t, done: !t.done }) })
     await loadTasks()
   } catch (e: any) {
     error.value = e.message
+    console.error('Erro ao atualizar tarefa:', e)
   }
 }
 
 async function deleteTask(id: number) {
   error.value = ''
   try {
-    await api(`/tasks/${id}`, { method: 'DELETE' })
+    await api(`/api/tarefas/${id}`, { method: 'DELETE' })
     await loadTasks()
   } catch (e: any) {
     error.value = e.message
+    console.error('Erro ao deletar tarefa:', e)
   }
 }
 
@@ -118,6 +140,13 @@ watch(() => session.token, (token) => {
     loadTasks()
   }
 }, { immediate: true })
+
+// 🔹 Carrega tarefas quando o componente é montado (se já tiver token)
+onMounted(() => {
+  if (session.token) {
+    loadTasks()
+  }
+})
 </script>
 
 <style>

@@ -1,8 +1,8 @@
 <template>
   <v-container class="text-center">
     <v-card class="pa-6">
-      <v-card-title class="text-h5">Bem-vindo à Gestão de Tarefas</v-card-title>
-      <v-card-text>
+      <v-card-title class="text-h3">Gestão de Tarefas</v-card-title>
+      <v-card-text class="text-h5">
         Organize suas tarefas de forma simples e prática.
       </v-card-text>
 
@@ -15,9 +15,9 @@
 
       <div v-else>
         <v-alert type="success" variant="tonal" class="mt-4 mx-auto" style="width: fit-content;">
-          Você está logado como {{ user.displayName || user.email }}.
+          Bem vindo, {{ user.displayName || user.email }}.
         </v-alert>
-        <v-btn color="secondary" class="mt-4" @click="goTasks">Ir para Tarefas</v-btn>
+        <v-btn color="blue" class="mt-4" @click="goTasks">Ir para Tarefas</v-btn>
       </div>
     </v-card>
   </v-container>
