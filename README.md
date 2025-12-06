@@ -94,4 +94,4 @@ Principais funcionalidades:
    ```bash
    npm run dev
 
-8. O backend estará disponível em `http://localhost:3000`.
+8. O backend estará disponível em `http://localhost:3000` e as rotas Swagger utilizando `http://localhost:3000/api-docs`.
