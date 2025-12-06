@@ -14,10 +14,10 @@
       </div>
 
       <div v-else>
-        <v-alert type="success" variant="tonal" class="mt-4">
+        <v-alert type="success" variant="tonal" class="mt-4 mx-auto" style="width: fit-content;">
           Você está logado como {{ user.displayName || user.email }}.
         </v-alert>
-        <v-btn color="secondary" class="mt-2" @click="goTasks">Ir para Tarefas</v-btn>
+        <v-btn color="secondary" class="mt-4" @click="goTasks">Ir para Tarefas</v-btn>
       </div>
     </v-card>
   </v-container>
