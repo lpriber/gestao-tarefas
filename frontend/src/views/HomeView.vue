@@ -1,15 +1,15 @@
 <template>
   <v-container class="text-center">
     <v-card class="pa-6">
-      <v-card-title class="text-h5">Bem-vindo à Gestão de Tarefas 🚀</v-card-title>
+      <v-card-title class="text-h5">Bem-vindo à Gestão de Tarefas</v-card-title>
       <v-card-text>
         Organize suas tarefas de forma simples e prática.
       </v-card-text>
 
       <div v-if="!user">
         <v-card-text>Faça login com sua conta Google para começar.</v-card-text>
-        <v-btn color="primary" @click="login">
-          <v-icon left>mdi-google</v-icon> Entrar com Google
+        <v-btn color="white" class="mt-4" @click="login">
+          <img src="/google.png" alt="Google Logo" class="mr-5" style="width: 20px; height: 20px;">Entrar com Google
         </v-btn>
       </div>
 
