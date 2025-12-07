@@ -16,6 +16,7 @@
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "firebase": "^12.6.0",
+    "lucide-vue-next": "^0.556.0",
     "pinia": "^3.0.4",
     "vite-plugin-vuetify": "^2.1.2",
     "vue": "^3.5.25",

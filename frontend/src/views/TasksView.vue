@@ -45,7 +45,7 @@
           <v-list>
             <v-list-item v-for="t in tasks" :key="t.id">
               <v-list-item-content>
-                <div class="d-flex align-center">
+                <div class="d-flex align-center flex">
                   <v-list-item-title :class="{ 'text-decoration-line-through': t.done }">
                     {{ t.title }}
                   </v-list-item-title>
@@ -59,18 +59,25 @@
                   >
                     {{ getCategoryName(t.categoria) }}
                   </v-chip>
+                  <v-list-item-action>
+                <div class="d-flex align-center ml-2 cursor-pointer" @click="toggleDone(t)">
+                  <v-icon v-if="t.done">
+                    <CheckCheck style="color: green;" :size="20" />
+                  </v-icon>
+                  <v-icon v-else>
+                    <CheckCheck style="color: gray;" :size="20" />
+                  </v-icon>
+                </div>
+                <div class="d-flex align-center ml-2 cursor-pointer" @click="deleteTask(t.id)">
+                  <v-icon>
+                    <Trash2 style="color: red;" :size="20" />
+                  </v-icon>
+                </div>
+              </v-list-item-action>
                 </div>
                 <v-list-item-subtitle>{{ t.description }}</v-list-item-subtitle>
+                
               </v-list-item-content>
-
-              <v-list-item-action>
-                <v-btn icon color="success" @click="toggleDone(t)">
-                  <v-icon>{{ t.done ? 'mdi-checkbox-marked-circle-outline' : 'mdi-checkbox-blank-circle-outline' }}</v-icon>
-                </v-btn>
-                <v-btn icon color="error" @click="deleteTask(t.id)">
-                  <v-icon>mdi-trash-can-outline</v-icon>
-                </v-btn>
-              </v-list-item-action>
             </v-list-item>
           </v-list>
         </v-card>
@@ -81,6 +88,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, computed } from 'vue'
+import { Trash2, CheckCheck } from 'lucide-vue-next'
 import { useSessionStore } from '../stores/session'
 import { useTheme } from 'vuetify' // Importante para o modo escuro
 
@@ -115,7 +123,6 @@ function getCategoryName(id: number) {
 }
 
 // --- Funções de API (Mantive sua lógica, apenas o form mudou) ---
-// ... (mantenha suas funções headers e api iguais as anteriores) ...
 
 function headers() {
   return {
