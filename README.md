@@ -86,6 +86,7 @@ Principais funcionalidades:
      user_uid VARCHAR(128) NOT NULL,
      title VARCHAR(255) NOT NULL,
      description TEXT,
+     categoria INT NULL,
      done BOOLEAN DEFAULT FALSE,
      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    );

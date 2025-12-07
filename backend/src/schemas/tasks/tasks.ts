@@ -3,6 +3,7 @@ export interface Task {
   user_uid: string
   title: string
   description: string | null
+  categoria: number | null
   done: boolean
   created_at: Date
 }
@@ -10,11 +11,13 @@ export interface Task {
 export interface CriarTask {
   title: string
   description?: string
+  categoria?: number
 }
 
 export interface AtualizarTask {
   title?: string
   description?: string
+  categoria?: number
   done?: boolean
 }
 
@@ -43,6 +46,12 @@ export const taskSwaggerSchema = {
         example: 'Descrição da tarefa',
         description: 'Descrição detalhada da tarefa'
       },
+      categoria: {
+        type: 'integer',
+        nullable: true,
+        example: 1,
+        description: 'ID da categoria da tarefa'
+      },
       done: {
         type: 'boolean',
         example: false,
@@ -69,6 +78,11 @@ export const taskSwaggerSchema = {
         type: 'string',
         example: 'Descrição da nova tarefa',
         description: 'Descrição da tarefa (opcional)'
+      },
+      categoria: {
+        type: 'integer',
+        example: 1,
+        description: 'ID da categoria da tarefa (opcional)'
       }
     },
     required: ['title']
@@ -85,6 +99,11 @@ export const taskSwaggerSchema = {
         type: 'string',
         example: 'Nova descrição',
         description: 'Nova descrição da tarefa'
+      },
+      categoria: {
+        type: 'integer',
+        example: 1,
+        description: 'ID da categoria da tarefa'
       },
       done: {
         type: 'boolean',

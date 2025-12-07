@@ -127,45 +127,74 @@ function headers() {
 async function api(path: string, options: RequestInit = {}) {
   const baseUrl = import.meta.env.VITE_API_URL
   const res = await fetch(baseUrl + path, { ...options, headers: headers() })
-  if (!res.ok) throw new Error(`Erro API: ${res.statusText}`)
+  
+  if (!res.ok) {
+    let errorMessage = `Erro API: ${res.statusText}`
+    try {
+      const contentType = res.headers.get('content-type')
+      if (contentType && contentType.includes('application/json')) {
+        const errorData = await res.json()
+        errorMessage = errorData.error || errorMessage
+      }
+    } catch {
+      // Se não conseguir parsear, usa a mensagem padrão
+    }
+    throw new Error(errorMessage)
+  }
+  
   return res.json()
 }
 
 async function loadTasks() {
   try {
-    tasks.value = await api('/tarefas') // Lembra de tirar o /api se já arrumou o .env
+    tasks.value = await api('/api/tarefas')
   } catch (e: any) {
-    console.error(e)
-  }
-}
-
-async function createTask() {
-  try {
-    // O backend precisa estar pronto para receber "categoria" no body!
-    await api('/tarefas', { method: 'POST', body: JSON.stringify(form.value) })
-    form.value = { title: '', description: '', categoria: null }
-    await loadTasks()
-  } catch (e: any) {
+    console.error('Erro ao carregar tarefas:', e)
     error.value = e.message
   }
 }
 
-// ... (mantenha toggleDone e deleteTask iguais) ...
-async function toggleDone(t: any) {
-   /* mesma lógica */ 
-   try {
-    await api(`/tarefas/${t.id}`, { method: 'PUT', body: JSON.stringify({ ...t, done: !t.done }) })
+async function createTask() {
+  error.value = ''
+  try {
+    await api('/api/tarefas', { method: 'POST', body: JSON.stringify(form.value) })
+    form.value = { title: '', description: '', categoria: null }
     await loadTasks()
-   } catch(e) {}
+  } catch (e: any) {
+    error.value = e.message
+    console.error('Erro ao criar tarefa:', e)
+  }
+}
+
+async function toggleDone(t: any) {
+  error.value = ''
+  try {
+    await api(`/api/tarefas/${t.id}`, { method: 'PUT', body: JSON.stringify({ ...t, done: !t.done }) })
+    await loadTasks()
+  } catch (e: any) {
+    error.value = e.message
+    console.error('Erro ao atualizar tarefa:', e)
+  }
 }
 
 async function deleteTask(id: number) {
-   /* mesma lógica */
-   try {
-    await api(`/tarefas/${id}`, { method: 'DELETE' })
+  error.value = ''
+  try {
+    await api(`/api/tarefas/${id}`, { method: 'DELETE' })
     await loadTasks()
-   } catch(e) {}
+  } catch (e: any) {
+    error.value = e.message
+    console.error('Erro ao deletar tarefa:', e)
+  }
 }
 
-watch(() => session.token, (token) => { if (token) loadTasks() }, { immediate: true })
+watch(() => session.token, (token) => { 
+  if (token) loadTasks() 
+}, { immediate: true })
+
+onMounted(() => {
+  if (session.token) {
+    loadTasks()
+  }
+})
 </script>

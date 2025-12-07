@@ -7,24 +7,24 @@ const router = Router()
 /**
  * @swagger
  * /api/tarefas:
- * get:
- * summary: Lista todas as tarefas do usuário autenticado
- * tags: [Tarefas]
- * security:
- * - bearerAuth: []
- * responses:
- * 200:
- * description: Lista de tarefas retornada com sucesso
- * content:
- * application/json:
- * schema:
- * type: array
- * items:
- * $ref: '#/components/schemas/Task'
- * 401:
- * description: Não autenticado
- * 500:
- * description: Erro ao buscar tarefas
+ *   get:
+ *     summary: Lista todas as tarefas do usuário autenticado
+ *     tags: [Tarefas]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de tarefas retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Não autenticado
+ *       500:
+ *         description: Erro ao buscar tarefas
  */
 router.get('/', async (req: any, res) => {
   try {
@@ -40,30 +40,30 @@ router.get('/', async (req: any, res) => {
 /**
  * @swagger
  * /api/tarefas:
- * post:
- * summary: Cria uma nova tarefa
- * tags: [Tarefas]
- * security:
- * - bearerAuth: []
- * requestBody:
- * required: true
- * content:
- * application/json:
- * schema:
- * $ref: '#/components/schemas/CreateTaskRequest'
- * responses:
- * 201:
- * description: Tarefa criada com sucesso
- * content:
- * application/json:
- * schema:
- * $ref: '#/components/schemas/Task'
- * 400:
- * description: Título é obrigatório
- * 401:
- * description: Não autenticado
- * 500:
- * description: Erro ao criar tarefa
+ *   post:
+ *     summary: Cria uma nova tarefa
+ *     tags: [Tarefas]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateTaskRequest'
+ *     responses:
+ *       201:
+ *         description: Tarefa criada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Título é obrigatório
+ *       401:
+ *         description: Não autenticado
+ *       500:
+ *         description: Erro ao criar tarefa
  */
 router.post('/', async (req: any, res) => {
   try {
@@ -88,37 +88,37 @@ router.post('/', async (req: any, res) => {
 /**
  * @swagger
  * /api/tarefas/{id}:
- * put:
- * summary: Atualiza uma tarefa existente
- * tags: [Tarefas]
- * security:
- * - bearerAuth: []
- * parameters:
- * - in: path
- * name: id
- * required: true
- * schema:
- * type: integer
- * description: ID da tarefa
- * requestBody:
- * required: true
- * content:
- * application/json:
- * schema:
- * $ref: '#/components/schemas/UpdateTaskRequest'
- * responses:
- * 200:
- * description: Tarefa atualizada com sucesso
- * content:
- * application/json:
- * schema:
- * $ref: '#/components/schemas/Task'
- * 401:
- * description: Não autenticado
- * 404:
- * description: Tarefa não encontrada
- * 500:
- * description: Erro ao atualizar tarefa
+ *   put:
+ *     summary: Atualiza uma tarefa existente
+ *     tags: [Tarefas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID da tarefa
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateTaskRequest'
+ *     responses:
+ *       200:
+ *         description: Tarefa atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Tarefa não encontrada
+ *       500:
+ *         description: Erro ao atualizar tarefa
  */
 router.put('/:id', async (req: any, res) => {
   try {
@@ -144,35 +144,35 @@ router.put('/:id', async (req: any, res) => {
 /**
  * @swagger
  * /api/tarefas/{id}:
- * delete:
- * summary: Deleta uma tarefa
- * tags: [Tarefas]
- * security:
- * - bearerAuth: []
- * parameters:
- * - in: path
- * name: id
- * required: true
- * schema:
- * type: integer
- * description: ID da tarefa
- * responses:
- * 200:
- * description: Tarefa deletada com sucesso
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * success:
- * type: boolean
- * example: true
- * 401:
- * description: Não autenticado
- * 404:
- * description: Tarefa não encontrada
- * 500:
- * description: Erro ao deletar tarefa
+ *   delete:
+ *     summary: Deleta uma tarefa
+ *     tags: [Tarefas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID da tarefa
+ *     responses:
+ *       200:
+ *         description: Tarefa deletada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Tarefa não encontrada
+ *       500:
+ *         description: Erro ao deletar tarefa
  */
 router.delete('/:id', async (req: any, res) => {
   try {

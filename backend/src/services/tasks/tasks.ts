@@ -20,7 +20,7 @@ export const tasksService = {
     return tasks.length > 0 ? tasks[0] : null
   },
 
-  async criarTask(uid: string, data: CriarTask & { categoria?: number }): Promise<Task> {
+  async criarTask(uid: string, data: CriarTask): Promise<Task> {
     // 🔹 Alteração: Recebendo categoria
     const { title, description, categoria } = data
 
@@ -44,7 +44,7 @@ export const tasksService = {
     return newTask
   },
 
-  async atualizarTask(id: number, uid: string, data: AtualizarTask & { categoria?: number }): Promise<Task | null> {
+  async atualizarTask(id: number, uid: string, data: AtualizarTask): Promise<Task | null> {
     const currentTask = await this.getTaskPorId(id, uid)
     if (!currentTask) {
       return null
@@ -53,8 +53,7 @@ export const tasksService = {
     const updatedData = {
       title: data.title !== undefined ? data.title : currentTask.title,
       description: data.description !== undefined ? data.description : currentTask.description,
-      // 🔹 Alteração: Lógica para atualizar a categoria
-      categoria: data.categoria !== undefined ? data.categoria : (currentTask as any).categoria,
+      categoria: data.categoria !== undefined ? data.categoria : currentTask.categoria,
       done: data.done !== undefined ? !!data.done : currentTask.done
     }
 
