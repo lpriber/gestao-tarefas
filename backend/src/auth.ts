@@ -21,6 +21,12 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
   const header = req.headers.authorization
   console.log("Authorization header recebido:", header)
 
+  // 🔹 DESENVOLVIMENTO: modo sem autenticação (comentar em produção)
+  if (process.env.NODE_ENV !== 'production') {
+    ;(req as any).user = { uid: 'dev-user', email: 'dev@example.com' }
+    return next()
+  }
+
   if (!header?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Token ausente' })
   }

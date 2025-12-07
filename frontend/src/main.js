@@ -10,7 +10,32 @@ import { useSessionStore } from './stores/session'
 
 import '@mdi/font/css/materialdesignicons.css'
 
-const vuetify = createVuetify({ icons: { defaultSet: 'mdi', aliases, sets: { mdi } } })
+const vuetify = createVuetify({ 
+  icons: { 
+    defaultSet: 'mdi', 
+    aliases, 
+    sets: { mdi } 
+  },
+  // INÍCIO DA CONFIGURAÇÃO DO TEMA (Modo Claro/Escuro)
+  theme: {
+    // Define qual tema deve ser usado ao iniciar a aplicação.
+    // 'light' é o padrão. Altere para 'dark' se quiser o modo escuro inicial.
+    defaultTheme: 'light', 
+    themes: {
+      light: {
+        colors: {
+          primary: '#1976D2', 
+        },
+      },
+      dark: {
+        colors: {
+          primary: '#90CAF9', 
+        },
+      },
+    },
+  },
+  // FIM DA CONFIGURAÇÃO DO TEMA
+})
 
 const app = createApp(App)
 const pinia = createPinia()
